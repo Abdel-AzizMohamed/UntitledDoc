@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function TopNav() {
+function Dashboard() {
   return (
     <nav className="top-nav">
       <li>
@@ -13,4 +13,4 @@ function TopNav() {
   );
 }
 
-export default TopNav;
+export default Dashboard;
