@@ -1,5 +1,6 @@
-import Header from "../comps/Header/Header.jsx";
-import { Dashboard } from "../comps/topNav/Dashboard.jsx";
+import { Link } from "react-router-dom";
+import Header from "../comps/Header/Header";
+import Dashboard from "../comps/dashboard/Dashboard";
 
 function Landing() {
   return (

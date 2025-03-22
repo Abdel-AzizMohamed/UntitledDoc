@@ -1,5 +1,5 @@
-import { Navigation } from "./Navigation.jsx";
-import { AccountMenu } from "./AccountMenu.jsx";
+import Navigation from "./Navigation";
+import AccountMenu from "./AccountMenu";
 
 function Header() {
   return (
