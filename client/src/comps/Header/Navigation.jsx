@@ -1,28 +1,36 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 function Navigation() {
   return (
-    <nav className="navigation">
+    <nav className="navigation flex content-center justify-start">
       <li className="drop-down">
+        tutorials
+        <FontAwesomeIcon icon="caret-down" />
         <div className="drop-menu">
-          <div className="drop-header">
+          <div className="drop-header flex items-center flex-start mb-12">
+            <FontAwesomeIcon icon="caret-left" />
             <h3 className="drop-title">tutorials - 1</h3>
+            <FontAwesomeIcon icon="caret-right" />
           </div>
           <div className="drop-content">
             <a href="#">
-              learn <span className="bold upper">html</span>
+              learn <span className="uppercase font-bold">html</span>
             </a>
             <a href="#">
-              learn <span className="bold upper">html</span>
+              learn <span className="uppercase font-bold">html</span>
             </a>
             <a href="#">
-              learn <span className="bold upper">html</span>
+              learn <span className="uppercase font-bold">html</span>
             </a>
             <a href="#">
-              learn <span className="bold upper">html</span>
+              learn <span className="uppercase font-bold">html</span>
             </a>
             <a href="#">
-              learn <span className="bold upper">html</span>
+              learn <span className="uppercase font-bold">html</span>
+            </a>
+            <a href="#">
+              learn <span className="uppercase font-bold">html</span>
             </a>
           </div>
         </div>
