@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Navigation() {
   return (
     <nav className="navigation flex content-center justify-start">
-      <li className="drop-down">
+      <li className="drop-down nav-item">
         tutorials
         <FontAwesomeIcon icon="caret-down" />
         <div className="drop-menu">
@@ -35,7 +35,9 @@ function Navigation() {
           </div>
         </div>
       </li>
-      <li className="nav-item"><Link to="/browse">browse</Link></li>
+      <li className="nav-item">
+        <Link to="/browse">browse</Link>
+      </li>
     </nav>
   );
 }

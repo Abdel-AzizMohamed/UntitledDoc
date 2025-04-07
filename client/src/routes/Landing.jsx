@@ -12,10 +12,10 @@ function Landing() {
       <main className="landing">
         <h1 className="landing-title">write your journey</h1>
         <p className="landing-info">
-          the free and flexible app for your thoughts
+          The free and flexible app for your thoughts
         </p>
-        <div className="">
-          <button className="download-app">get doc for linux</button>
+        <div className="platforms-container">
+          <button className="download-app"></button>
           <Link to="/more-platforms" className="more-platform">
             more platforms
           </Link>

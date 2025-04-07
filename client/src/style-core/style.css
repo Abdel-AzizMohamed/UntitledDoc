@@ -61,6 +61,10 @@
 }
 
 body {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
   background-color: var(--nat-200);
 }
 
@@ -113,7 +117,7 @@ body {
 
 .low-nav .logo a {
   display: inline-block;
-  margin-right: 3rem;
+  margin-right: 2rem;
   padding: 1rem;
   text-decoration: none;
   text-transform: uppercase;
@@ -122,17 +126,18 @@ body {
   font-weight: bold;
 }
 
-.low-nav .navigation .drop-down {
+.low-nav .navigation .nav-item {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+  margin: 0 1rem;
   color: var(--nat-700);
   text-transform: capitalize;
   cursor: pointer;
 }
 
-.low-nav .navigation .drop-down::after {
+.low-nav .navigation .nav-item::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -143,10 +148,11 @@ body {
   transition: width var(--trans-dur)
 }
 
-.low-nav .navigation .drop-down:hover::after,
-.low-nav .navigation .drop-down.active::after {
+.low-nav .navigation .nav-item:hover::after,
+.low-nav .navigation .nav-item.active::after {
   width: 100%;
 }
+
 .low-nav .navigation .drop-down svg {
   margin: 0 .5rem;
 }
@@ -202,4 +208,103 @@ body {
 .low-nav .navigation .drop-menu .drop-content a:hover span {
   color: var(--brand-100);
 }
+
+.low-nav .account-menu .log-in {
+  margin: 0 1rem;
+  color: var(--nat-600);
+  transition: color var(--trans-dur);
+}
+
+.low-nav .account-menu .log-in:hover {
+  color: var(--brand-200)
+}
+
+.low-nav .account-menu .sign-up {
+  display: inline-block;
+  padding: .25rem .5rem;
+  background-color: var(--nat-600);
+  border-radius: var(--radius);
+  font-weight: bold;
+  cursor: pointer;
+  transition: color var(--trans-dur), background var(--trans-dur);
+}
+
+.low-nav .account-menu .sign-up:hover {
+  background-color: var(--brand-200);
+  color: var(--nat-600)
+}
 /* End Header */
+
+/* ######## Start Landing ######## */
+.landing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.landing .landing-title {
+  text-transform: capitalize;
+  color: var(--nat-600);
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.landing .landing-info {
+  margin: 1.5rem;
+  color: var(--nat-600);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.landing .platforms-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.landing .platforms-container .download-app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 50%;
+  padding: 1.2rem;
+  background-color: var(--brand-200);
+  border-radius: var(--radius);
+  color: var(--nat-600);
+  font-weight: bold;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: box-shadow var(--trans-dur);
+}
+
+.landing .platforms-container .download-app::after {
+  content: "get doc for linux";
+  position: absolute;
+  transition: font-size var(--trans-dur);
+}
+
+.landing .platforms-container .download-app:hover::after {
+  font-size: .95rem;
+}
+
+.landing .platforms-container .download-app:hover {
+  box-shadow: inset 0 0 0px 4px var(--nat-600);
+}
+
+.landing .platforms-container .more-platform {
+  color: var(--brand-100);
+  text-transform: capitalize;
+  transition: color var(--trans-dur)
+}
+
+.landing .platforms-container .more-platform:hover {
+  color: var(--nat-600)
+}
+/* ######## End Landing ######## */
