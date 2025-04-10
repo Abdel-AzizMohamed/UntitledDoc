@@ -160,6 +160,7 @@ body {
 .low-nav .navigation .drop-menu {
   display: none;
   position: absolute;
+  z-index: 100;
   top: calc(100% + 5px);
   left: -1rem;
   width: 80vw;
