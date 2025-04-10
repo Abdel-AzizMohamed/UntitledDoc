@@ -225,6 +225,7 @@ body {
   padding: .25rem .5rem;
   background-color: var(--nat-600);
   border-radius: var(--radius);
+  color: var(--nat-200);
   font-weight: bold;
   cursor: pointer;
   transition: color var(--trans-dur), background var(--trans-dur);
@@ -278,7 +279,7 @@ body {
   padding: 1.2rem;
   background-color: var(--brand-200);
   border-radius: var(--radius);
-  color: var(--nat-600);
+  color: var(--nat-fix-200);
   font-weight: bold;
   text-transform: capitalize;
   cursor: pointer;
@@ -300,7 +301,7 @@ body {
 }
 
 .landing .platforms-container .more-platform {
-  color: var(--brand-100);
+  color: var(--brand-200);
   text-transform: capitalize;
   transition: color var(--trans-dur)
 }
