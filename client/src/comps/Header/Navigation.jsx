@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Navigation() {
@@ -8,11 +7,12 @@ function Navigation() {
 
   return (
     <nav className="navigation flex content-center justify-start">
+      <li className={`nav-item drop-down ${dropDown ? "active" : ""}`}>
         <div onClick={() => setDropDown((d) => !d)} className="drop-down-label">
           tutorials
           <FontAwesomeIcon icon="caret-down" />
         </div>
-        <div className={`drop-menu ${dropDown ? "block" : ""}`}>
+        <div className="drop-menu" style={dropDown ? {display: "block"} : {}}>
           <div className="drop-header flex items-center flex-start mb-12">
             <FontAwesomeIcon icon="caret-left" />
             <h3 className="drop-title">tutorials - 1</h3>

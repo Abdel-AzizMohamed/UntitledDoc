@@ -153,6 +153,14 @@ body {
   width: 100%;
 }
 
+.low-nav .navigation .drop-down {
+  cursor: auto;
+}
+
+.low-nav .navigation .drop-down .drop-down-label {
+  cursor: pointer;
+}
+
 .low-nav .navigation .drop-down svg {
   margin: 0 .5rem;
 }
@@ -208,6 +216,29 @@ body {
 
 .low-nav .navigation .drop-menu .drop-content a:hover span {
   color: var(--brand-100);
+}
+
+.low-nav .account-menu .theme-button {
+  width: 60px;
+  padding: 0 .2rem;
+  background-color: var(--nat-500);
+  border: 1px solid var(--nat-600);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--trans-dur);
+}
+
+.low-nav .account-menu .theme-button:hover {
+  background-color: var(--brand-200);
+}
+
+.low-nav .account-menu .theme-button svg {
+  color: var(--nat-100);
+  transition: transform var(--trans-dur);
+}
+
+.low-nav .account-menu .theme-button svg.fa-moon {
+  transform: translateX(300%);
 }
 
 .low-nav .account-menu .log-in {
