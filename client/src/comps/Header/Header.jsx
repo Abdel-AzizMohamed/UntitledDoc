@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Navigation from "./Navigation";
+import MobileNav from "./MobileNav";
 import AccountMenu from "./AccountMenu";
 
 function Header() {
@@ -11,6 +12,7 @@ function Header() {
         </span>
         <Navigation />
       </div>
+      <MobileNav />
       <AccountMenu />
     </div>
   );

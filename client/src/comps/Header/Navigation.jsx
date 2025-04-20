@@ -6,7 +6,7 @@ function Navigation() {
   const [dropDown, setDropDown] = useState(false);
 
   return (
-    <nav className="navigation flex content-center justify-start">
+    <nav className="navigation flex content-center justify-start hid-xe">
       <li className={`nav-item drop-down ${dropDown ? "active" : ""}`}>
         <div onClick={() => setDropDown((d) => !d)} className="drop-down-label">
           tutorials

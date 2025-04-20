@@ -218,7 +218,7 @@ body {
   color: var(--brand-100);
 }
 
-.low-nav .account-menu .theme-button {
+.low-nav .theme-button {
   width: 60px;
   padding: 0 .2rem;
   background-color: var(--nat-500);
@@ -228,16 +228,16 @@ body {
   transition: background var(--trans-dur);
 }
 
-.low-nav .account-menu .theme-button:hover {
+.low-nav .theme-button:hover {
   background-color: var(--brand-200);
 }
 
-.low-nav .account-menu .theme-button svg {
+.low-nav .theme-button svg {
   color: var(--nat-100);
   transition: transform var(--trans-dur);
 }
 
-.low-nav .account-menu .theme-button svg.fa-moon {
+.low-nav .theme-button svg.fa-moon {
   transform: translateX(300%);
 }
 
@@ -266,7 +266,28 @@ body {
   background-color: var(--brand-200);
   color: var(--nat-600)
 }
-/* End Header */
+/* Start Mobile Nav */
+.mob-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.mob-nav li > svg {
+  color: var(--nat-600);
+  font-size: 1.2rem;
+  margin: 0 1rem 0 2rem;
+  cursor: pointer;
+  transition: transform var(--trans-dur);
+}
+
+.mob-nav li > svg:hover,
+.mob-nav li > svg.active {
+  transform: rotate(90deg);
+}
+/* End Mobile Nav */
+/* ###### End Header ###### */
 
 /* ######## Start Landing ######## */
 .landing {
