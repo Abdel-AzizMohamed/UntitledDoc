@@ -1,31 +1,59 @@
 /*#### Start Global Media ####*/
 
-@media only screen and (min-width : 320px) and (max-width : 480px) {
-	.hid-xe {
-		display: none !important;
-	}
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .hid-xe {
+    display: none !important;
+  }
 
-	:root {
-		font-size: 14px;
-	}
+  .vis-xe-bl {
+    display: block;
+  }
+
+  .vis-xe-fl {
+    display: flex !important;
+  }
+
+  :root {
+    font-size: 14px;
+  }
 }
 
-@media only screen and (min-width : 481px) and (max-width : 768px) {
-	.hid-sm {
-		display: none !important;
-	}
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  .hid-sm {
+    display: none !important;
+  }
 }
 
-@media only screen  and (min-width : 769px) and (max-width : 1224px) {
-	.hid-mid {
-		display: none !important;
-	}
+@media only screen and (min-width: 769px) and (max-width: 1224px) {
+  .hid-mid {
+    display: none !important;
+  }
 }
 
-@media only screen  and (min-width : 1225px) {
-	.hid-big {
-		display: none !important;
-	}
+@media only screen and (min-width: 1225px) {
+  .hid-big {
+    display: none !important;
+  }
 }
 
 /*#### End Global Media ####*/
+
+/*#### Start Landing ####*/
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .landing {
+    width: 100%;
+    justify-content: space-between;
+    text-align: center;
+  }
+
+  .landing .platforms-container {
+    margin-top: 3rem;
+    flex-direction: column;
+  }
+
+  .landing .platforms-container .download-app {
+    margin-bottom: 1rem;
+  }
+}
+
+/*#### End Landing ####*/

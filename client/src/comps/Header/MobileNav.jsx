@@ -1,17 +1,33 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import ThemeSwitcher from "./ThemeSwitcher.jsx"
+import ThemeSwitcher from "./ThemeSwitcher.jsx";
 
 function MobileNav() {
   const [dropDown, setDropDown] = useState(false);
 
   return (
-    <nav className="mob-nav vis-xe">
+    <nav className="mob-nav vis-xe-fl">
       <li>
         <ThemeSwitcher />
       </li>
-      <li><FontAwesomeIcon onClick={() => setDropDown((d) => !d)} className={dropDown ? "active": ""} icon="gear" /></li>
+      <li className={dropDown ? "active" : ""}>
+        <FontAwesomeIcon onClick={() => setDropDown((d) => !d)} icon="gear" />
+        <div className="drop-down">
+          <div className="account-menu">
+            <Link to="/" className="log-in">Log in</Link>
+            <Link to="/" className="sign-up">Sign Up for free</Link>
+          </div>
+          <ul className="navigation">
+            <li>
+              <Link to="/">tutorials</Link>
+            </li>
+            <li>
+              <Link to="/">browes</Link>
+            </li>
+          </ul>
+        </div>
+      </li>
     </nav>
   );
 }
