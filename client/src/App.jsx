@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Landing from "./routes/Landing.jsx";
+import RegisterForm from "./routes/RegisterForm.jsx";
 import "./style-core/style.css"
 import "./style-core/media.css"
 import "./style-core/tailwind.css";
@@ -13,6 +14,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/register" element={<RegisterForm />} />
       </Routes>
     </BrowserRouter>
   );

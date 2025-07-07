@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher"
 
@@ -10,7 +9,7 @@ function AccountMenu() {
       <Link to="/login" className="log-in">
         Log in
       </Link>
-      <Link to="/sign-up" className="sign-up">
+      <Link to="/register" className="sign-up">
         sign up for free
       </Link>
     </div>
