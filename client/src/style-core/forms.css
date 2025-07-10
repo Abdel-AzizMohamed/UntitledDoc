@@ -1,0 +1,183 @@
+.form-wrapper {
+  height: calc(100vh - 68px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-wrapper form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 4px;
+  background-color: var(--nat-100);
+  box-shadow: 1px 1px 4px var(--shadow);
+}
+
+.form-wrapper form .form-header {
+  text-align: center;
+}
+
+.form-wrapper form .form-header h2 {
+  font-size: 2.5rem;
+  color: var(--black);
+  text-transform: capitalize;
+}
+
+.form-wrapper form .form-header span {
+  display: inline-block;
+  margin: 1rem 0 3rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  color: var(--black);
+}
+
+.form-wrapper form .field-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.form-wrapper form .field-group input {
+  min-width: 400px;
+  padding: 0.5rem 0;
+  background: none;
+  border-bottom: 2px solid var(--nat-400);
+  color: var(--black);
+}
+
+.form-wrapper form .field-group input::placeholder {
+  text-transform: capitalize;
+  color: var(--black);
+}
+
+.form-wrapper form .field-group input:focus {
+  outline: none;
+}
+
+.form-wrapper form .field-group .error-container {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  margin-top: 1rem;
+  background-color: var(--red);
+  border-radius: 4px;
+}
+
+.form-wrapper form .field-group .error-icon {
+  color: var(--white-fix);
+  margin-right: .5rem;
+}
+
+.form-wrapper form .field-group .error-massage {
+  color: var(--white-fix);
+}
+
+.form-wrapper form .submit-button {
+  width: 100%;
+  padding: .5rem 0;
+  margin: 2rem 0;
+  background-color: var(--brand-200);
+  border-radius: 4px;
+  color: var(--white-fix);
+  text-transform: capitalize;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background var(--trans-dur);
+}
+
+.form-wrapper form .submit-button:hover {
+  background-color: var(--brand-300);
+}
+
+.form-wrapper form .remember-me {
+  align-self: flex-start;
+}
+
+.form-wrapper form .remember-me span {
+  margin-left: .5rem;
+  color: var(--black);
+  font-size: .75rem;
+  font-weight: bold;
+}
+
+.form-wrapper form .quick-access {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.form-wrapper form .quick-access .quick-title {
+  position: relative;
+  text-align: center;
+  width: 100%;
+  margin: 1rem;
+  background-color: var(--nat-100);
+  color: var(--black);
+  font-weight: bold;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.form-wrapper form .quick-access .quick-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 100%;
+  background-color: var(--nat-100);
+  z-index: -1;
+}
+
+.form-wrapper form .quick-access .quick-title::before {
+  content: "";
+  position: absolute;
+  bottom: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--nat-400);
+  z-index: -1;
+}
+
+.form-wrapper form .quick-access .social-container a {
+  margin: 0 1rem;
+  color: var(--black);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.form-wrapper form .quick-access .social-container svg {
+  transition: color var(--trans-dur)
+}
+
+.form-wrapper form .quick-access .social-container a:nth-child(1) svg:hover {
+  color: #1877F2
+}
+
+.form-wrapper form .quick-access .social-container a:nth-child(2) svg:hover {
+  color: #eb4132
+}
+
+.form-wrapper form .quick-access .social-container a:nth-child(3) svg:hover {
+  color: #1da1f2
+}
+
+.form-wrapper .login-switch {
+  margin-top: 1rem;
+  color: var(--black);
+}
+
+.form-wrapper .login-switch a {
+  margin-left: .25rem;
+  color: var(--brand-300);
+  text-decoration: underline;
+}
