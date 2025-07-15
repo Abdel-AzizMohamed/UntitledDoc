@@ -15,8 +15,8 @@ function MobileNav() {
         <FontAwesomeIcon onClick={() => setDropDown((d) => !d)} icon="gear" />
         <div className="drop-down">
           <div className="account-menu">
-            <Link to="/" className="log-in">Log in</Link>
-            <Link to="/" className="sign-up">Sign Up for free</Link>
+            <Link to="/login" className="log-in">Log in</Link>
+            <Link to="/register" className="sign-up">Sign Up for free</Link>
           </div>
           <ul className="navigation">
             <li>
