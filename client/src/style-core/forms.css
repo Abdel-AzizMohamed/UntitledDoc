@@ -38,6 +38,7 @@
 }
 
 .form-wrapper form .field-group {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -53,6 +54,14 @@
   color: var(--black);
 }
 
+.form-wrapper form .field-group input.error {
+  border-color: var(--red);
+}
+
+.form-wrapper form .field-group input.success {
+  border-color: var(--green);
+}
+
 .form-wrapper form .field-group input::placeholder {
   text-transform: capitalize;
   color: var(--black);
@@ -62,7 +71,43 @@
   outline: none;
 }
 
-.form-wrapper form .field-group .error-container {
+.form-wrapper form .field-group svg.offscreen {
+  display: none;
+}
+
+.form-wrapper form .field-group .error-icon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  color: var(--red);
+}
+
+.form-wrapper form .field-group .success-icon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  color: var(--green);
+}
+
+.form-wrapper form .field-group .tool-tip {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  padding: .5rem;
+  background-color: var(--nat-600);
+  border-radius: 4px;
+  color: var(--nat-100);
+  z-index: 1;
+}
+
+.form-wrapper form .field-group .tool-tip svg {
+  margin-right: .5rem;
+  color: var(--nat-100);
+}
+
+.form-wrapper form .error-container {
   width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: 1rem;
@@ -70,12 +115,12 @@
   border-radius: 4px;
 }
 
-.form-wrapper form .field-group .error-icon {
+.form-wrapper form .error-icon {
   color: var(--white-fix);
   margin-right: .5rem;
 }
 
-.form-wrapper form .field-group .error-massage {
+.form-wrapper form .error-massage {
   color: var(--white-fix);
 }
 

@@ -63,7 +63,7 @@
   .form-wrapper {
     padding: 0 1rem;
   }
-  .form-wrapper input {
+  .form-wrapper form .field-group input {
     min-width: 300px;
   }
 }

@@ -19,4 +19,5 @@ def main():
 
 
 if __name__ == '__main__':
+    os.environ["SECRET_KEY"] = "django-insecure-srmo$5s^@s$h0=%_0yb1n&taxpj26e0!7o02gl==7i7m0yvnq$"
     main()

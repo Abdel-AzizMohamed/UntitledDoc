@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Header from "../comps/Header/Header";
-import InputField from "../comps/Form/InputField";
+import AuthInputField from "../comps/Form/AuthInputField";
 import { Link } from "react-router-dom";
 import "../style-core/forms.css";
 import axios from 'axios';
@@ -30,22 +30,6 @@ function Loginform() {
 
   }
 
-  async function logout(e) {
-    e.preventDefault();
-    try {
-
-      const response = await axios.post('https://7b979163062c.ngrok-free.app/logout/',
-        {"refresh": Cookies.get("AGXREFRESH")}
-      )
-      console.log(response)
-      console.log(response.data)
-    } catch(err) {
-      console.log(err)
-      console.log(err.response)
-    }
-
-  }
-
   return (
     <>
       <header>
@@ -58,7 +42,7 @@ function Loginform() {
             <span>sign up to continue</span>
           </div>
           <div className="field-group">
-            <InputField
+            <AuthInputField
               name="email"
               fieldType="email"
               fieldValue={email}
@@ -67,7 +51,7 @@ function Loginform() {
             {/* <span className="error-massage">This is an error</span> */}
           </div>
           <div className="field-group">
-            <InputField
+            <AuthInputField
               name="password"
               fieldType="password"
               fieldValue={password}
@@ -76,7 +60,6 @@ function Loginform() {
             {/* <span className="error-massage">This is an error</span> */}
           </div>
           <input type="submit" className="submit-button" value="sign in" />
-          <button className="submit-button" onClick={logout}>logout</button>
           <div className="remember-me">
             <input id="remember" type="checkbox" />
             <label htmlFor="remember">remember me</label>
@@ -84,20 +67,14 @@ function Loginform() {
           <div className="quick-access">
             <span className="quick-title">quick access</span>
             <div className="social-container">
-{/*              <Link to="">
-                <FontAwesomeIcon icon={["fab", "facebook"]} />
-              </Link>
-*/}              <Link to="">
+              <Link to="">
                 <FontAwesomeIcon icon={["fab", "google"]} />
               </Link>
-              {/* <Link to=""> */}
-              {/*   <FontAwesomeIcon icon={["fab", "twitter"]} /> */}
-              {/* </Link> */}
             </div>
           </div>
         </form>
         <span className="login-switch">
-          Already have an account? <Link to="login">Sign In</Link>
+          Already have an account? <Link to="/register">Sign In</Link>
         </span>
       </main>
     </>

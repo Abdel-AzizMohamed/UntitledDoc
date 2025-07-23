@@ -213,8 +213,8 @@ def register(request):
     serializer = RegisterSerializer(data=request.data)
 
     if serializer.is_valid():
-        user = serializer.save()
-        send_activation_email(user, request)
+        # user = serializer.save()
+        # send_activation_email(user, request)
 
         return Response(
             {
@@ -225,7 +225,7 @@ def register(request):
 
     errors = serializer.errors
     first_field = next(iter(errors))
-    first_error = {"message": errors[first_field][0]}
+    first_error = {"message": errors[first_field][0], "type": "error"}
 
     return Response(first_error, status=status.HTTP_400_BAD_REQUEST)
 
