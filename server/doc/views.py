@@ -1,4 +1,4 @@
-import re 
+import re
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
@@ -24,6 +24,7 @@ from .serializer import (
     DemoRequestSerializer,
     ContactUsSerializer,
 )
+from django.utils.timezone import now
 
 
 def send_activation_email(user, request):
@@ -160,7 +161,9 @@ def reset_password(request):
         uid = urlsafe_base64_decode(uidb64).decode()
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        return Response({"message": "Invalid link."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {"message": "Invalid link."}, status=status.HTTP_400_BAD_REQUEST
+        )
 
     if not default_token_generator.check_token(user, token):
         return Response(
@@ -177,27 +180,27 @@ def reset_password(request):
     if len(password) < 8:
         return Response(
             {"message": "Password must be at least 8 characters long."},
-            status=status.HTTP_400_BAD_REQUEST
+            status=status.HTTP_400_BAD_REQUEST,
         )
     if not re.search(r"[A-Z]", password):
         return Response(
             {"message": "Password must contain at least one uppercase letter."},
-            status=status.HTTP_400_BAD_REQUEST
+            status=status.HTTP_400_BAD_REQUEST,
         )
     if not re.search(r"[a-z]", password):
         return Response(
             {"message": "Password must contain at least one lowercase letter."},
-            status=status.HTTP_400_BAD_REQUEST
+            status=status.HTTP_400_BAD_REQUEST,
         )
     if not re.search(r"\d", password):
         return Response(
             {"message": "Password must contain at least one digit."},
-            status=status.HTTP_400_BAD_REQUEST
+            status=status.HTTP_400_BAD_REQUEST,
         )
     if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
         return Response(
             {"message": "Password must contain at least one special character."},
-            status=status.HTTP_400_BAD_REQUEST
+            status=status.HTTP_400_BAD_REQUEST,
         )
 
     user.set_password(password)
@@ -213,7 +216,7 @@ def register(request):
     serializer = RegisterSerializer(data=request.data)
 
     if serializer.is_valid():
-        # user = serializer.save()
+        serializer.save()
         # send_activation_email(user, request)
 
         return Response(
@@ -244,32 +247,64 @@ def login(request):
     user = authenticate(email=email, password=password)
 
     if user is not None:
-        if not user.is_active:
-            return Response(
-                {"message": "Account is not activated. Please verify your email."},
-                status=status.HTTP_403_FORBIDDEN,
-            )
-
         refresh = RefreshToken.for_user(user)
         access = refresh.access_token
-        response = Response({"message": "Login successful!", 
-                            'refresh': str(refresh),
-                            'access': str(access),},
-                             status=status.HTTP_200_OK)
-        
+
+        response = Response(
+            {
+                "message": "Login successful!",
+                "accessToken": str(access),
+            },
+            status=status.HTTP_200_OK,
+        )
+        response.set_cookie(
+            key="refresh_token",
+            value=str(refresh),
+            httponly=True,
+            secure=False,
+            samesite="Lax",
+            max_age=1 * 24 * 60 * 60,
+        )
+
         return response
-        
 
     return Response(
-        {"message": "Invalid email or password."
-        }, status=status.HTTP_401_UNAUTHORIZED
+        {"message": "Invalid email or password."}, status=status.HTTP_401_UNAUTHORIZED
     )
+
+
+@api_view(["POST"])
+def refresh_access_token_from_cookie(request):
+    refresh_token = request.COOKIES.get("refresh_token")
+
+    if refresh_token is None:
+        return Response(
+            {"detail": "Refresh token not found in cookie."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    try:
+        refresh = RefreshToken(refresh_token)
+        access_token = refresh.access_token
+
+        return Response(
+            {
+                "access": str(access_token),
+                "access_expires_at": access_token["exp"],  # optional
+            },
+            status=status.HTTP_200_OK,
+        )
+    except TokenError:
+        return Response(
+            {"detail": "Invalid or expired refresh token."},
+            status=status.HTTP_401_UNAUTHORIZED,
+        )
 
 
 @api_view(["POST"])
 def logout(request):
     refresh_token = request.data.get("refresh")
-    
+
     if not refresh_token:
         return Response({"error": f"No refresh token found."}, status=400)
 
@@ -282,16 +317,25 @@ def logout(request):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    response = Response({"message": f"Logged out successfully."}, status=status.HTTP_205_RESET_CONTENT)
+    response = Response(
+        {"message": f"Logged out successfully."}, status=status.HTTP_205_RESET_CONTENT
+    )
 
     return response
 
 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def me(request):
     user = request.user
     serializer = UserSerializer(user)
     return Response(serializer.data)
+
+
+@api_view(["GET"])
+def time(request):
+    time = now()
+    return Response({"time": time}, status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])

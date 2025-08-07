@@ -1,0 +1,43 @@
+.video-container {
+    position: relative;
+}
+
+.video-container .overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: #fff */
+}
+
+.video-container .controls {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 0 1rem
+}
+
+.video-container .image-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.video-container .controls svg {
+    color: #fff;
+    margin: 0 1rem;
+    font-size: 1.3rem
+}
+.video-container .sep {
+    color: #fff;
+    margin: 0 .5rem;
+}
+
+.video-container .time-display {
+    color: #fff;
+}

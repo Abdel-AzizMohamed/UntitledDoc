@@ -1,31 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Header from "../comps/Header/Header";
 import AuthInputField from "../comps/Form/AuthInputField";
 import { Link } from "react-router-dom";
 import "../style-core/forms.css";
-import axios from "../api/axios";
-import { apis } from "../api/axios";
+import axios, { apis } from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+
+const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[*@#$%])[^\s]{8,24}$/;
 
 function RegisterForm() {
-  const [name, setName] = useState(""),
+  const [username, setUsername] = useState(""),
     [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
-    [confirmPassword, setConfirmPassword] = useState(""),
-    [serverError, setServerError] = useState(""),
-    [fieldFocus, setFieldFocus] = useState({
-      "username": false,
-      "email": false,
-      "password": false,
-      "confirmPassword": false
-    }),
-    [fieldError, setFieldError] = useState({
-      "username": true,
-      "email": true,
-      "password": true,
-      "confirmPassword": true
-    });
+    [confirmPassword, setConfirmPassword] = useState("");
+  const [fieldFocus, setFieldFocus] = useState({
+    username: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
+  const [fieldValid, setFieldValid] = useState({
+    username: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
 
   const navigate = useNavigate();
 
@@ -34,25 +37,42 @@ function RegisterForm() {
 
     try {
       const response = await axios.post(apis.register, {
-        username: name,
+        username: username,
         email: email,
         password: password,
-        confirm_password: confirmPassword
-      })
-
-      console.log(JSON.stringify(response?.data));
-      console.log(response?.data);
-      navigate("/login")
-
-    } catch(err) {
+        confirm_password: confirmPassword,
+      });
+      navigate("/login", {
+        state: { message: "Account created successfully!" },
+      });
+    } catch (err) {
       if (!err?.response) {
-        console.log("No Server Response.")
-      } else {        
-        console.log(err?.response?.status)
-        setServerError(err?.response?.data?.message)
+        throw new Error("No Server Response.");
+      } else {
+        throw new Error(err?.response?.data?.message);
       }
     }
   }
+
+  useEffect(() => {
+    const validation = USER_REGEX.test(username);
+    setFieldValid((v) => ({ ...v, username: validation }));
+  }, [username]);
+
+  useEffect(() => {
+    const validation = EMAIL_REGEX.test(email);
+    setFieldValid((v) => ({ ...v, email: validation }));
+  }, [email]);
+
+  useEffect(() => {
+    const pwdValidation = PWD_REGEX.test(password);
+    const cfValidation = password == confirmPassword && pwdValidation;
+    setFieldValid((v) => ({
+      ...v,
+      password: pwdValidation,
+      confirmPassword: cfValidation,
+    }));
+  }, [password, confirmPassword]);
 
   return (
     <>
@@ -60,52 +80,57 @@ function RegisterForm() {
         <Header />
       </header>
       <main className="form-wrapper">
-        <form action="" onSubmit={register} >
+        <Toaster />
+        <form
+          action=""
+          onSubmit={(e) =>
+            toast.promise(register(e), {
+              loading: "Registering your account...",
+              error: (err) => err.message || "Registration failed.",
+            })
+          }
+        >
           <div className="form-header">
             <h2>sign up</h2>
             <span>sign up to continue</span>
           </div>
-          {serverError && 
-            <div className="error-container">
-              <FontAwesomeIcon className="error-icon" icon="warning" />
-              <span className="error-massage">{serverError}</span>
-            </div>
-          }
           <div className="field-group">
             <AuthInputField
               name="username"
               fieldType="text"
-              fieldValue={name}
-              setField={setName}
+              fieldValue={username}
+              setField={setUsername}
+              fieldFocus={fieldFocus}
               setFocus={setFieldFocus}
-              fieldError={fieldError}
+              fieldValid={fieldValid}
             />
-            <FontAwesomeIcon className={fieldError.username && name ? "error-icon" : "offscreen"} icon="circle-exclamation" />
-            <FontAwesomeIcon className={!fieldError.username ? "success-icon" : "offscreen"} icon="circle-check" />
-            {fieldFocus.username && 
+            {fieldFocus.username && (
               <p className="tool-tip">
                 <FontAwesomeIcon icon="circle-info" />
-                4 to 24 characters.<br />
-                Must begin with a letter.<br />
+                4 to 24 characters.
+                <br />
+                Must begin with a letter.
+                <br />
                 Letters, numbers, underscores, hyphens allowed.
               </p>
-            }
+            )}
           </div>
           <div className="field-group">
             <AuthInputField
               name="email"
-              fieldType="email"
+              fieldType="text"
               fieldValue={email}
               setField={setEmail}
+              fieldFocus={fieldFocus}
               setFocus={setFieldFocus}
-              fieldError={fieldError}
+              fieldValid={fieldValid}
             />
-            {fieldFocus.email && 
+            {fieldFocus.email && (
               <p className="tool-tip">
                 <FontAwesomeIcon icon="circle-info" />
-                Must be a vaild email address.
+                Must provide a valid email.
               </p>
-            }
+            )}
           </div>
           <div className="field-group">
             <AuthInputField
@@ -113,17 +138,23 @@ function RegisterForm() {
               fieldType="password"
               fieldValue={password}
               setField={setPassword}
+              fieldFocus={fieldFocus}
               setFocus={setFieldFocus}
-              fieldError={fieldError}
+              fieldValid={fieldValid}
             />
-            {fieldFocus.password && 
+            {fieldFocus.password && (
               <p className="tool-tip">
                 <FontAwesomeIcon icon="circle-info" />
-                8 to 24 characters.<br />
-                Must include uppercase and lowercase letters, a number and a special character.<br />
+                8 to 24 characters.
+                <br />
+                Must include uppercase and lowercase letters, a number and a
+                special character.
+                <br />
                 Allowed special characters: ! @ # $ %
+                <br />
+                Spaces are not allowed
               </p>
-            }
+            )}
           </div>
           <div className="field-group">
             <AuthInputField
@@ -131,21 +162,30 @@ function RegisterForm() {
               fieldType="password"
               fieldValue={confirmPassword}
               setField={setConfirmPassword}
+              fieldFocus={fieldFocus}
               setFocus={setFieldFocus}
-              fieldError={fieldError}
+              fieldValid={fieldValid}
             />
-            {fieldFocus.confirmPassword && 
+            {fieldFocus.confirmPassword && (
               <p className="tool-tip">
                 <FontAwesomeIcon icon="circle-info" />
-                Must match the password field.
+                Must match the first password input field.
               </p>
+            )}
+          </div>
+          <input
+            type="submit"
+            className="submit-button"
+            value="sign up"
+            disabled={
+              !fieldValid.username ||
+              !fieldValid.email ||
+              !fieldValid.password ||
+              !fieldValid.confirmPassword
+                ? true
+                : false
             }
-          </div>
-          <input type="submit" className="submit-button" value="sign up" />
-          <div className="remember-me">
-            <input id="remember" type="checkbox" />
-            <label htmlFor="remember">remember me</label>
-          </div>
+          />
           <div className="quick-access">
             <span className="quick-title">quick access</span>
             <div className="social-container">

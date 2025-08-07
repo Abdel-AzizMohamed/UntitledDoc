@@ -141,6 +141,11 @@
   background-color: var(--brand-300);
 }
 
+.form-wrapper form .submit-button:disabled {
+  background-color: var(--nat-300);
+  cursor: not-allowed;
+}
+
 .form-wrapper form .remember-me {
   align-self: flex-start;
 }

@@ -16,7 +16,10 @@ urlpatterns = [
     ),
     path("activate/", views.activate_account, name="activate"),
     path("resend-activation/", views.resend_activation_email, name="resend-activation"),
-    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path(
+        "token/refresh/", views.refresh_access_token_from_cookie, name="token_refresh"
+    ),
     path("request-demo/", views.request_demo, name="request-demo"),
     path("contact-us/", views.contact_us, name="contact-us"),
+    path("time/", views.time, name="time"),
 ]

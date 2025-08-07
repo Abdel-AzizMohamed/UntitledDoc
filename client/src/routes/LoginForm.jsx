@@ -1,34 +1,117 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import toast, { Toaster } from "react-hot-toast";
+import useAuth from "../hooks/useAuth";
 import Header from "../comps/Header/Header";
 import AuthInputField from "../comps/Form/AuthInputField";
-import { Link } from "react-router-dom";
 import "../style-core/forms.css";
-import axios from 'axios';
-import Cookies from "js-cookie";
+import axios, { apis } from "../api/axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
-function Loginform() {
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function LoginForm() {
   const [email, setEmail] = useState(""),
     [password, setPassword] = useState("");
+  const [serverError, setServerError] = useState("");
+  const [fieldFocus, setFieldFocus] = useState({
+    email: false,
+    password: false,
+  });
+  const [fieldValid, setFieldValid] = useState({
+    email: false,
+    password: false,
+  });
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const successMessage = location.state?.message;
+  const from = location.state?.from?.pathname || "/";
+
+  const axiosPrivate = useAxiosPrivate();
+
+  const { setAuth } = useAuth();
 
   async function login(e) {
     e.preventDefault();
     try {
-
-      const response = await axios.post('https://7b979163062c.ngrok-free.app/login/', {
-        email: email,
-        password: password
-      })
-      console.log(response)
-      console.log(response.data)
-      Cookies.set("AGXACCESS", response.data.access, { expires: 1 });
-      Cookies.set("AGXREFRESH", response.data.refresh, { expires: 7 });
-    } catch(err) {
-      console.log(err)
-      console.log(err.response)
+      const response = await axios.post(
+        apis.login,
+        {
+          email: email,
+          password: password,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(response?.data);
+      const accessToken = response?.data?.accessToken;
+      setAuth({ accessToken });
+      // navigate(from, { replace: true });
+    } catch (err) {
+      if (!err?.response) {
+        throw new Error("No Server Response.");
+      } else {
+        throw new Error(err?.response?.data?.message);
+      }
     }
-
   }
+  async function login() {
+    try {
+      const response = await axiosPrivate.post();
+      console.log(response?.data);
+    } catch (err) {
+      if (!err?.response) {
+        throw new Error("No Server Response.");
+      } else {
+        throw new Error(err?.response?.data?.message);
+      }
+    }
+  }
+
+  async function payment() {
+    try {
+      const response = await axiosPrivate.post(
+        "api/payment/initiate-payment/",
+        {
+          academic_year_id: 2,
+          mobile: "01010101010",
+          payment_method: "wallet",
+          payer_email: "example@ex.com",
+          payer_first_name: "abdelaziz",
+          payer_last_name: "mohamed",
+        }
+      );
+      console.log(response);
+      window.location.href = response.data.redirect_url;
+    } catch (err) {
+      if (!err?.response) {
+        throw new Error("No Server Response.");
+      } else {
+        throw new Error(err?.response?.data?.message);
+      }
+    }
+  }
+
+  useEffect(() => {
+    const validation = EMAIL_REGEX.test(email);
+    setFieldValid((v) => ({ ...v, email: validation }));
+  }, [email]);
+
+  useEffect(() => {
+    setFieldValid((v) => ({
+      ...v,
+      password: password.trim() !== "",
+    }));
+  }, [password]);
+
+  useEffect(() => {
+    if (successMessage) toast.success(successMessage);
+  }, [successMessage]);
 
   return (
     <>
@@ -36,19 +119,27 @@ function Loginform() {
         <Header />
       </header>
       <main className="form-wrapper">
-        <form action="" onSubmit={login} >
+        <Toaster />
+        <form action="" onSubmit={login}>
           <div className="form-header">
-            <h2>sign up</h2>
-            <span>sign up to continue</span>
+            <h2>sign in</h2>
           </div>
+          {serverError && (
+            <div className="error-container">
+              <FontAwesomeIcon className="error-icon" icon="warning" />
+              <span className="error-massage">{serverError}</span>
+            </div>
+          )}
           <div className="field-group">
             <AuthInputField
               name="email"
-              fieldType="email"
+              fieldType="text"
               fieldValue={email}
               setField={setEmail}
+              fieldFocus={fieldFocus}
+              setFocus={setFieldFocus}
+              fieldValid={fieldValid}
             />
-            {/* <span className="error-massage">This is an error</span> */}
           </div>
           <div className="field-group">
             <AuthInputField
@@ -56,10 +147,20 @@ function Loginform() {
               fieldType="password"
               fieldValue={password}
               setField={setPassword}
+              fieldFocus={fieldFocus}
+              setFocus={setFieldFocus}
+              fieldValid={fieldValid}
             />
-            {/* <span className="error-massage">This is an error</span> */}
           </div>
-          <input type="submit" className="submit-button" value="sign in" />
+          <input
+            type="submit"
+            className="submit-button"
+            value="Login"
+            //disabled={!fieldValid.email || !fieldValid.password ? true : false}
+          />
+          <button className="submit-button" onClick={payment}>
+            pay
+          </button>
           <div className="remember-me">
             <input id="remember" type="checkbox" />
             <label htmlFor="remember">remember me</label>
@@ -74,11 +175,11 @@ function Loginform() {
           </div>
         </form>
         <span className="login-switch">
-          Already have an account? <Link to="/register">Sign In</Link>
+          Need an account? <Link to="/register">Sign up</Link>
         </span>
       </main>
     </>
   );
 }
 
-export default Loginform;
+export default LoginForm;
