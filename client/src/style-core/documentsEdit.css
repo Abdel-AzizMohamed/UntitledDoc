@@ -1,0 +1,33 @@
+.add-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-basis: 80%;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.add-menu .menu-title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.add-menu .menu-title svg {
+  margin-right: 1rem;
+  color: var(--nat-600);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color .3s;
+}
+
+.add-menu .menu-title svg:hover {
+  color: var(--brand-200)
+}
+
+.add-menu .menu-title h2 {
+  color: var(--nat-600);
+  text-transform: capitalize;
+}

@@ -1,11 +1,31 @@
 import axios from "axios";
 
-const BASE_URL = "https://187c41ba0288.ngrok-free.app";
+const BASE_URL = "http://localhost:8000";
+const authsystem = "api/auth/";
+const doc = "api/doc/";
+const slash = "/";
 
 export const apis = {
-  login: "api/auth/login/",
-  register: "register/",
-  me: "me/",
+  login: authsystem + "login" + slash,
+  register: authsystem + "register" + slash,
+  me: authsystem + "me" + slash,
+  refresh: authsystem + "token/refresh" + slash,
+  verify: authsystem + "token/verify" + slash,
+  logout: authsystem + "logout" + slash,
+  documents: doc + "documents" + slash,
+  addDocument: doc + "document" + slash,
+  deleteDocument: doc + "document" + slash,
+  chapters: doc + "chapters" + slash,
+  addChapter: doc + "document" + slash,
+  deleteChapter: doc + "chapter" + slash,
+  sections: doc + "sections" + slash,
+  addSection: doc + "chapter" + slash,
+  deleteSection: doc + "section" + slash,
+  records: doc + "records" + slash,
+  addRecord: doc + "chapter" + slash,
+  deleteRecord: doc + "record" + slash,
+  firstRecord: doc + "record" + slash,
+  record: doc + "record" + slash,
 };
 export default axios.create({
   baseURL: BASE_URL,

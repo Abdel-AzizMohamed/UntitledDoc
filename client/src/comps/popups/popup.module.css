@@ -1,0 +1,106 @@
+.popup {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    min-width: 500px;
+    min-height: 200px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: var(--nat-100);
+    border: 1px solid var(--nat-200);
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px var(--shadow);
+    transform: translate(-50%, -50%);
+}
+
+.popup .bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 25px;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0 .5rem;
+    border-radius: 4px 4px 0 0;
+    color: var(--nat-600);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.popup.warning .bar {
+    background-color: var(--red);
+}
+
+.popup.info .bar {
+    background-color: var(--blue);
+}
+
+.popup .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0 1rem;
+}
+
+.popup .top svg {
+    font-size: 6rem;
+    margin-right: 2rem;
+}
+
+.popup.warning .top svg {
+    color: var(--red);
+}
+
+.popup.info .top svg {
+    color: var(--blue);
+}
+
+.popup .top .info .title {
+    color: var(--nat-600);
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    margin-bottom: 1rem;
+}
+
+.popup .top .info .description {
+    color: var(--nat-600);
+}
+
+.popup .controls {
+    margin-left: auto;
+    padding: 1rem 0;
+}
+
+.popup .controls button {
+    padding: .5rem 1rem;
+    margin: 0 .25rem;
+    border: none;
+    border-radius: 4px;
+    text-transform: capitalize;
+    transition: color .3s, background .3s;
+    cursor: pointer;
+}
+
+.popup .controls button.cancel {
+    background-color: var(--nat-600);
+    border: 1px solid var(--brand-200);
+    color: var(--brand-200)
+}
+
+.popup .controls button.proceed {
+    background-color: var(--red);
+    color: var(--nat-600);
+    font-weight: bold;
+}
+
+.popup .controls button.cancel:hover {
+    color: var(--nat-600);
+    background-color: var(--brand-200);
+}
+
+.popup .controls button.proceed:hover {
+    color: var(--red);
+    background-color: var(--nat-600);
+}

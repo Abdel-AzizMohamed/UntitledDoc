@@ -1,0 +1,107 @@
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+/* Start Sidebar */
+.content-wrapper aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-basis: 15%;
+  min-height: 100vh;
+  height: 100%;
+  background-color: var(--nat-100);
+}
+
+.content-wrapper aside h2 {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: .5rem;
+  border-right: 3px solid var(--nat-600);
+  color: var(--nat-600);
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.content-wrapper aside a {
+  position: relative;
+  width: 100%;
+  margin: 0.25rem 0;
+  padding: .5rem;
+  color: var(--nat-600);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.content-wrapper aside a::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 4px;
+  height: 0%;
+  background-color: var(--brand-200);
+  transition:
+    top 0.3s,
+    height 0.3s;
+}
+
+.content-wrapper aside a:hover::after,
+.content-wrapper aside a.active::after {
+  height: 100%;
+  top: 0;
+}
+
+.content-wrapper aside a .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: var(--brand-200);
+  opacity: 0;
+  transition:
+    opacity 0.3s,
+    width 0.5s ease;
+  z-index: -1;
+}
+
+.content-wrapper aside a:hover .overlay,
+.content-wrapper aside a.active .overlay {
+  opacity: 0.2;
+  width: 100%;
+}
+
+/* End Sidebar */
+
+
+.content-wrapper .content {
+    flex-basis: 80%;
+    padding-top: 1rem;
+}
+
+.content-wrapper .content h1, h2, h3, h4 ,h5 ,h6 {
+  color: var(--nat-600);
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.content-wrapper .content p {
+  color: var(--nat-600)
+}
+
+.content-wrapper .content ul, ol {
+  color: var(--nat-600)
+}
+
+.content-wrapper .content img {
+  width: 50%
+}
+
+.content-wrapper .content a {
+  display: block;
+  color: var(--nat-600);
+  text-decoration: underline;
+}

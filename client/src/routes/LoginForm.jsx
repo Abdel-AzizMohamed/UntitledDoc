@@ -6,9 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import Header from "../comps/Header/Header";
 import AuthInputField from "../comps/Form/AuthInputField";
-import "../style-core/forms.css";
 import axios, { apis } from "../api/axios";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -27,10 +25,8 @@ function LoginForm() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const successMessage = location.state?.message;
+  const redirectMessage = location.state?.message;
   const from = location.state?.from?.pathname || "/";
-
-  const axiosPrivate = useAxiosPrivate();
 
   const { setAuth } = useAuth();
 
@@ -48,51 +44,16 @@ function LoginForm() {
           withCredentials: true,
         }
       );
-      console.log(response?.data);
       const accessToken = response?.data?.accessToken;
+      const message = response?.data?.message
+      toast[message?.type](message?.text)
       setAuth({ accessToken });
-      // navigate(from, { replace: true });
+      setTimeout(() => navigate(from, { replace: true }), 800)
     } catch (err) {
       if (!err?.response) {
         throw new Error("No Server Response.");
       } else {
-        throw new Error(err?.response?.data?.message);
-      }
-    }
-  }
-  async function login() {
-    try {
-      const response = await axiosPrivate.post();
-      console.log(response?.data);
-    } catch (err) {
-      if (!err?.response) {
-        throw new Error("No Server Response.");
-      } else {
-        throw new Error(err?.response?.data?.message);
-      }
-    }
-  }
-
-  async function payment() {
-    try {
-      const response = await axiosPrivate.post(
-        "api/payment/initiate-payment/",
-        {
-          academic_year_id: 2,
-          mobile: "01010101010",
-          payment_method: "wallet",
-          payer_email: "example@ex.com",
-          payer_first_name: "abdelaziz",
-          payer_last_name: "mohamed",
-        }
-      );
-      console.log(response);
-      window.location.href = response.data.redirect_url;
-    } catch (err) {
-      if (!err?.response) {
-        throw new Error("No Server Response.");
-      } else {
-        throw new Error(err?.response?.data?.message);
+        throw new Error(err?.response?.data?.message.text);
       }
     }
   }
@@ -110,8 +71,8 @@ function LoginForm() {
   }, [password]);
 
   useEffect(() => {
-    if (successMessage) toast.success(successMessage);
-  }, [successMessage]);
+    if (redirectMessage) toast[redirectMessage?.type](redirectMessage?.text);
+  }, [redirectMessage]);
 
   return (
     <>
@@ -120,7 +81,12 @@ function LoginForm() {
       </header>
       <main className="form-wrapper">
         <Toaster />
-        <form action="" onSubmit={login}>
+        <form action="" onSubmit={(e) => {
+          toast.promise(login(e), {
+            loading: "authenticate to your account...",
+            error: (err) => err.message || "Authentication failed."
+          })
+        }}>
           <div className="form-header">
             <h2>sign in</h2>
           </div>
@@ -156,11 +122,8 @@ function LoginForm() {
             type="submit"
             className="submit-button"
             value="Login"
-            //disabled={!fieldValid.email || !fieldValid.password ? true : false}
+            disabled={!fieldValid.email || !fieldValid.password ? true : false}
           />
-          <button className="submit-button" onClick={payment}>
-            pay
-          </button>
           <div className="remember-me">
             <input id="remember" type="checkbox" />
             <label htmlFor="remember">remember me</label>

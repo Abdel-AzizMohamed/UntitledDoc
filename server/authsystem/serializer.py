@@ -1,6 +1,9 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 import re
+
+
+User = get_user_model()
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -8,7 +11,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         write_only=True, required=True, style={"input_type": "password"}
     )
     confirm_password = serializers.CharField(
-        write_only=True, required=True, label="Confirm password", style={"input_type": "password"}
+        write_only=True,
+        required=True,
+        label="Confirm password",
+        style={"input_type": "password"},
     )
 
     class Meta:
@@ -53,14 +59,13 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"error": "Password do not match."})
         return data
 
-
     def create(self, validated_data):
         validated_data.pop("confirm_password")
         user = User.objects.create_user(
             username=validated_data["username"],
             email=validated_data.get("email"),
             password=validated_data["password"],
-            is_active=False,
+            is_active=True,
         )
         return user
 
@@ -69,25 +74,3 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["username", "email"]
-
-
-class DemoRequestSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    title = serializers.CharField()
-    emailAddress = serializers.EmailField()
-    mobileNumber = serializers.CharField()
-    country = serializers.CharField()
-    city = serializers.CharField()
-    region = serializers.CharField()
-    requested_solution = serializers.CharField()
-    companyName = serializers.CharField()
-    number_of_users = serializers.IntegerField()
-    industry = serializers.CharField()
-    whereAboutUs = serializers.CharField(required=False, default="None", allow_blank=True)
-
-
-class ContactUsSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    emailAddress = serializers.EmailField()
-    mobileNumber = serializers.CharField()
-    message = serializers.CharField()

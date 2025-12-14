@@ -6,8 +6,8 @@ function Navigation() {
   const [dropDown, setDropDown] = useState(false);
 
   return (
-    <nav className="navigation flex content-center justify-start hid-xe">
-      <li className={`nav-item drop-down ${dropDown ? "active" : ""}`}>
+    <nav className="navigation hid-xe">
+{/*      <li className={`nav-item drop-down ${dropDown ? "active" : ""}`}>
         <div onClick={() => setDropDown((d) => !d)} className="drop-down-label">
           tutorials
           <FontAwesomeIcon icon="caret-down" />
@@ -40,7 +40,7 @@ function Navigation() {
           </div>
         </div>
       </li>
-      <li className="nav-item">
+*/}      <li className="nav-item">
         <Link to="/browse">browse</Link>
       </li>
     </nav>

@@ -43,7 +43,7 @@ function RegisterForm() {
         confirm_password: confirmPassword,
       });
       navigate("/login", {
-        state: { message: "Account created successfully!" },
+        state: response?.data,
       });
     } catch (err) {
       if (!err?.response) {
