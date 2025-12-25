@@ -66,7 +66,7 @@ records_patterns = [
         name="records-retrieval",
     ),
     path(
-        "record/<int:document_id>/",
+        "record/<int:document_id>/first/",
         records.RecordsGetFirstView.as_view(),
         name="records-retrieval",
     ),

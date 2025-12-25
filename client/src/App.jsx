@@ -31,6 +31,7 @@ function App() {
         <Route path="/add/section" element={<UserMenu />} />
         <Route path="/records" element={<UserMenu />} />
         <Route path="/add/record" element={<UserMenu />} />
+        <Route path="/edit/record" element={<UserMenu />} />
         <Route path="/setting" element={<UserMenu />} />
         <Route path="/browse" element={<Browse />} />
       </Routes>

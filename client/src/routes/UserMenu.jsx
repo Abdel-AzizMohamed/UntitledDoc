@@ -12,6 +12,7 @@ import Sections from "./Sections.jsx";
 import AddSection from "../comps/Document/AddSection.jsx";
 import Records from "./Records.jsx";
 import AddRecord from "../comps/Document/AddRecord.jsx";
+import EditRecord from "../comps/Document/EditRecord.jsx";
 
 function UserMenu() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function UserMenu() {
           {navSelection === "add/section" && <AddSection />}
           {navSelection === "records" && <Records />}
           {navSelection === "add/record" && <AddRecord />}
+          {navSelection === "edit/record" && <EditRecord />}
         </DocumentProvider>
       </main>
     </>

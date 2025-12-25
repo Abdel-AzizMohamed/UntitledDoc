@@ -14,7 +14,7 @@ function Browse() {
 
   async function retrieve_first_record() {
     try {
-      const response = await axiosPrivate.get(`${apis.firstRecord}${docId}/`);
+      const response = await axiosPrivate.get(`${apis.firstRecord}${docId}/first/`);
       setContent(response.data.data.content);
     } catch (err) {
       console.log(err);

@@ -1,3 +1,8 @@
+.add-form {
+  width: 100%;
+  padding-right: 2rem;
+}
+
 .add-menu {
   display: flex;
   flex-direction: column;
@@ -6,6 +11,10 @@
   flex-basis: 80%;
   min-height: 100vh;
   height: 100%;
+}
+
+.add-menu textarea {
+  min-height: 200px;
 }
 
 .add-menu .menu-title {
@@ -30,4 +39,9 @@
 .add-menu .menu-title h2 {
   color: var(--nat-600);
   text-transform: capitalize;
+}
+
+.add-menu input,
+.add-menu textarea {
+  width: 100%;
 }

@@ -146,6 +146,27 @@ class RecordCreationView(APIView):
 class RecordEditView(APIView):
     permission_classes = [IsAuthenticated]
 
+    def get(self, request, record_id):
+        print("uwu")
+        record = Record.objects.get(id=record_id)
+
+        return Response(
+            {
+                "message": {
+                    "text": f"successfully retrieved record'{record_id}'",
+                    "type": "success",
+                },
+                "data": {
+                    "id": record.id,
+                    "name": record.name,
+                    "content": record.content,
+                    "slug": record.slug,
+                    "draft": record.draft,
+                },
+            },
+            status=status.HTTP_200_OK,
+        )
+
     def delete(self, request, record_id):
         Record.objects.filter(id=record_id).delete()
 
@@ -159,20 +180,25 @@ class RecordEditView(APIView):
             status=status.HTTP_200_OK,
         )
 
-    def patch(self, request, section_id):
+    def patch(self, request, record_id):
         name = request.data.get("name")
-        chapter_id = request.data.get("chapterId")
+        content = request.data.get("content")
+        slug = request.data.get("slug")
+        # chapter_id = request.data.get("chapterId")
 
-        chapter = Chapter.objects.get(id=chapter_id)
-        section = Section.objects.get(id=section_id)
+        record = Record.objects.get(id=record_id)
+        # section = Section.objects.get(id=section_id)
 
-        section.name = name
-        section.chapter = chapter
+        record.name = name
+        record.content = content
+        record.slug = slug
+
+        record.save()
 
         return Response(
             {
                 "message": {
-                    "text": f"successfully edited the chapter '{section_id}'",
+                    "text": f"successfully edited the chapter '{record_id}'",
                     "type": "success",
                 }
             },

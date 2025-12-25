@@ -6,10 +6,9 @@ import InputField from "../Form/InputField";
 import AreaField from "../Form/AreaField";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { apis } from "../../api/axios";
-import useDoc from "../../hooks/useDoc";
 import "../../style-core/documentsEdit.css";
 
-function AddRecord() {
+function EditRecord() {
   const [name, setName] = useState();
   const [content, setContent] = useState();
   const [slug, setSlug] = useState();
@@ -17,21 +16,34 @@ function AddRecord() {
 
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
-  const { doc } = useDoc();
-  const chapterId = doc.chapter.id;
+  const location = useLocation();
 
-  async function addRecord(e) {
+  async function getRecordData() {
+    try {
+      const response = await axiosPrivate.get(
+        `${apis.retrieveRecord}${location.state.id}/`,
+      );
+      const message = response?.data?.message;
+      toast[message?.type](message?.text);
+      const data = response.data.data;
+      setName(data.name);
+      setContent(data.content);
+      setSlug(data.slug);
+    } catch (err) {
+      if (!err?.response) {
+        throw new Error("No Server Response.");
+      } else {
+        throw new Error(err?.response?.data?.message.text);
+      }
+    }
+  }
+
+  async function editReocrd(e) {
     e.preventDefault();
     try {
-      const response = await axiosPrivate.post(
-        `${apis.addRecord}${chapterId}/record/`,
-        {
-          name,
-          content,
-          slug,
-          draft,
-          sectionId: doc.section.id,
-        },
+      const response = await axiosPrivate.patch(
+        `${apis.editRecord}${location.state.id}/`,
+        { name, content, slug },
       );
       const message = response?.data?.message;
       toast[message?.type](message?.text);
@@ -45,6 +57,10 @@ function AddRecord() {
     }
   }
 
+  useState(() => {
+    getRecordData();
+  }, []);
+
   return (
     <div className="add-menu">
       <Toaster />
@@ -52,14 +68,14 @@ function AddRecord() {
         <Link to="/records">
           <FontAwesomeIcon icon={"caret-left"} />
         </Link>
-        <h2>add record</h2>
+        <h2>edit record</h2>
       </div>
       <form
         className="add-form"
         action=""
         method="POST"
         onSubmit={(e) => {
-          toast.promise(addRecord(e), {
+          toast.promise(editReocrd(e), {
             loading: "Inserting the record...",
             error: (err) => err.message || "Inserting failed.",
           });
@@ -78,10 +94,10 @@ function AddRecord() {
           fieldValue={slug}
           setField={setSlug}
         />
-        <input type="submit" value="Insert" />
+        <input type="submit" value="Update" />
       </form>
     </div>
   );
 }
 
-export default AddRecord;
+export default EditRecord;

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../../style-core/Browse.css";
+import "../../style-core/browse.css";
 
 function BrowserSide({ data, documentName }) {
   return (

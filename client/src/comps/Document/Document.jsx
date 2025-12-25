@@ -27,7 +27,9 @@ function Document({ data, nav, onActiveDocument, onShowPopup }) {
             onShowPopup(true);
           }}
         />
-        <FontAwesomeIcon icon="pen" />
+        <Link to="/edit/record" state={{ id: data.id }}>
+          <FontAwesomeIcon icon="pen" />
+        </Link>
         <Link
           to="/Browse"
           state={{ docId: data.id, docName: data.title, recordId: -1 }}
