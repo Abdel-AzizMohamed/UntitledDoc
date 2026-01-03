@@ -32,7 +32,7 @@ function Document({ data, nav, onActiveDocument, onShowPopup }) {
         </Link>
         <Link
           to="/Browse"
-          state={{ docId: data.id, docName: data.title, recordId: -1 }}
+          state={{ docId: data.id, docName: data.title, recId: -1 }}
         >
           <FontAwesomeIcon icon="eye" />
         </Link>

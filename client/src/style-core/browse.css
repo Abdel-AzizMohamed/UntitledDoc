@@ -25,7 +25,7 @@
   text-transform: capitalize;
 }
 
-.content-wrapper aside a {
+.content-wrapper aside div {
   position: relative;
   width: 100%;
   margin: 0.25rem 0;
@@ -35,7 +35,7 @@
   z-index: 1;
 }
 
-.content-wrapper aside a::after {
+.content-wrapper aside div::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -48,13 +48,13 @@
     height 0.3s;
 }
 
-.content-wrapper aside a:hover::after,
-.content-wrapper aside a.active::after {
+.content-wrapper aside div:hover::after,
+.content-wrapper aside div.active::after {
   height: 100%;
   top: 0;
 }
 
-.content-wrapper aside a .overlay {
+.content-wrapper aside div .overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -68,8 +68,8 @@
   z-index: -1;
 }
 
-.content-wrapper aside a:hover .overlay,
-.content-wrapper aside a.active .overlay {
+.content-wrapper aside div:hover .overlay,
+.content-wrapper aside div.active .overlay {
   opacity: 0.2;
   width: 100%;
 }
@@ -83,12 +83,14 @@
 }
 
 .content-wrapper .content h1, h2, h3, h4 ,h5 ,h6 {
+  margin-bottom: 2rem;
   color: var(--nat-600);
   font-weight: bold;
   text-transform: capitalize;
 }
 
 .content-wrapper .content p {
+  margin: 2rem 0;
   color: var(--nat-600)
 }
 

@@ -8,13 +8,16 @@ import Markdown from "react-markdown";
 function Browse() {
   const location = useLocation();
   const axiosPrivate = useAxiosPrivate();
-  const { docId, docName, recordId } = location.state;
+  const { docId, docName, recId } = location.state;
+  const [recordId, setRecordId] = useState(recId);
   const [data, setData] = useState([]);
   const [content, setContent] = useState("");
 
   async function retrieve_first_record() {
     try {
-      const response = await axiosPrivate.get(`${apis.firstRecord}${docId}/first/`);
+      const response = await axiosPrivate.get(
+        `${apis.firstRecord}${docId}/first/`
+      );
       setContent(response.data.data.content);
     } catch (err) {
       console.log(err);
@@ -44,14 +47,18 @@ function Browse() {
     if (recordId === -1) retrieve_first_record();
     else retrieve_record();
     retrieve_records();
-  }, []);
+  }, [recordId]);
   return (
     <>
       <header>
         <Header />
       </header>
       <main className="content-wrapper">
-        <BrowserSide data={data} documentName={docName} />
+        <BrowserSide
+          data={data}
+          documentName={docName}
+          setRecordId={setRecordId}
+        />
         <div className="content">
           <Markdown>{content}</Markdown>
         </div>

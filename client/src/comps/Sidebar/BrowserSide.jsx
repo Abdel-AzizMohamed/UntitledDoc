@@ -1,17 +1,16 @@
-import { Link } from "react-router-dom";
 import "../../style-core/browse.css";
 
-function BrowserSide({ data, documentName }) {
+function BrowserSide({ data, documentName, setRecordId }) {
   return (
     <aside>
       {data &&
         data.map((item) => {
           const records = item.records.map((record) => {
             return (
-              <Link key={record.id} to={`/${documentName}/${record.slug}`}>
+              <div key={record.id} onClick={() => setRecordId(record.id)}>
                 <div className="overlay"></div>
                 {record.name}
-              </Link>
+              </div>
             );
           });
 
